@@ -15,7 +15,7 @@ public class WordFinder {
 	}
 
 	private Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
-		return puzzleLine.indexOf(word.substring(0, 1));
+		return puzzleLine.indexOf(word);
 	}
 
 }

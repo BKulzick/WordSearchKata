@@ -5,18 +5,22 @@ import static org.junit.Assert.*;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.wordSearch.model.WordFinderAnswer;
+
 public class WordFinderTest {
 
 	@Test
 	public void whenGivenLettersWithWordEnsureGivenWordFound() {
 		WordFinder finder = new WordFinder();
-		Assert.assertTrue(finder.searchFor("boy","abcboyefg"));
+		WordFinderAnswer answer = finder.searchFor("boy","abcboyefg");
+		assertTrue(answer.getIsWordFound());
 	}
 	
 	@Test
 	public void whenGivenLettersWithNoWordEnsureGivenWordNotFound() {
 		WordFinder finder = new WordFinder();
-		Assert.assertFalse(finder.searchFor("boy","abcyefg"));
+		WordFinderAnswer answer = finder.searchFor("boy","abcyefg");
+		assertFalse(answer.getIsWordFound());
 	}
-
+	
 }

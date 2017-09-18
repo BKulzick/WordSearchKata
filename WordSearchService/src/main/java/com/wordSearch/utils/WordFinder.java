@@ -1,10 +1,12 @@
 package com.wordSearch.utils;
 
+import com.wordSearch.model.WordFinderAnswer;
+
 public class WordFinder {
 
-	public boolean searchFor(String word, String puzzleLine) {
-		if (puzzleLine.contains(word)) { return true; }
-		return false;
+	public WordFinderAnswer searchFor(String word, String puzzleLine) {
+		if (puzzleLine.contains(word)) { return new WordFinderAnswer(true); }
+		return new WordFinderAnswer(false);
 	}
 
 }

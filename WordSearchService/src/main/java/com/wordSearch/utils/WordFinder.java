@@ -6,12 +6,30 @@ public class WordFinder {
 
 	public WordFinderAnswer searchFor(String word, String puzzleLine) {
 		if (puzzleLine.contains(word)) { 
-			WordFinderAnswer answer =new WordFinderAnswer(true);
-			Integer location  = findLocationOfWordInPuzzle(word,puzzleLine);
-			answer.setXLocation(location);
-			return answer; 
+			return buildAnswerLocation(word, puzzleLine); 
 			}
+		if (puzzleLine.contains(backwards(word))) {
+			WordFinderAnswer answer = buildAnswerLocation(backwards(word), puzzleLine);
+			return reverseLocationForBackwardsAnswer(answer,puzzleLine);
+		}
+		
 		return new WordFinderAnswer(false);
+	}
+
+	private WordFinderAnswer reverseLocationForBackwardsAnswer(WordFinderAnswer answer,String puzzleLine) {
+		Integer correctLocation = puzzleLine.length() - answer.getXLocation();
+		answer.setXLocation(correctLocation);
+		return answer;
+	}
+
+	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine) {
+		WordFinderAnswer answer =new WordFinderAnswer(true);
+		answer.setXLocation(findLocationOfWordInPuzzle(word,puzzleLine));
+		return answer;
+	}
+
+	private String backwards(String word) {
+		return new StringBuilder(word).reverse().toString();
 	}
 
 	private Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {

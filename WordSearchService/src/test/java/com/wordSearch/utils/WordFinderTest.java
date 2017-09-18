@@ -16,6 +16,7 @@ public class WordFinderTest {
 	private static final String STRING_HAS_BOY_AT_4 = "gadcboyefg";
 	private static final String DUPLICATE_BOY_AT_4 = "gbdcboyefg";
 	private static final String BOY = "boy";
+	private static final String BACKWARDS_BOY_AT_5 = "012yob00";
 
 	@Test
 	public void whenGivenLettersWithWordEnsureGivenWordFound() {
@@ -54,6 +55,14 @@ public class WordFinderTest {
 		assertTrue(answer.getIsWordFound());
 		Assert.assertEquals(FOURTH_SPOT,answer.getXLocation());
 	}	
+	
+	@Test
+	public void whenWordExistsBackwordsEnsureXCoordinateInLineReturnsAtSpotFive() {
+		WordFinder finder = new WordFinder();
+		WordFinderAnswer answer = finder.searchFor(BOY,BACKWARDS_BOY_AT_5);
+		assertTrue(answer.getIsWordFound());
+		Assert.assertEquals(FIFTH_SPOT,answer.getXLocation());
+	}
 	
 	
 }

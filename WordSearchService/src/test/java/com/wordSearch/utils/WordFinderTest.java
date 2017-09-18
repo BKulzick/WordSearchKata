@@ -23,4 +23,12 @@ public class WordFinderTest {
 		assertFalse(answer.getIsWordFound());
 	}
 	
+	@Test
+	public void whenWordIsFoundEnsureXCoordinateInLineReturns() {
+		WordFinder finder = new WordFinder();
+		WordFinderAnswer answer = finder.searchFor("boy","addadboydcefs");
+		assertTrue(answer.getIsWordFound());
+		Assert.assertEquals(answer.getXLocation(),(Integer)5);
+	}
+	
 }

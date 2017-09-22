@@ -26,9 +26,15 @@ public class WordPuzzleConverter {
 
 	private void addVerticalLinesToWordPuzzle() {
 		List<String> horizontalRows = wordPuzzle.getHorizontalRows();
+		for (int i = 0; i < horizontalRows.size(); i++) {
+			createAdditionalVerticalRow(horizontalRows, i);			
+		}
+	}
+
+	private void createAdditionalVerticalRow(List<String> horizontalRows, Integer index) {
 		StringBuilder verticalRow = new StringBuilder();
 		for (String row : horizontalRows) {
-			verticalRow.append(row.substring(0, 1));
+			verticalRow.append(row.substring(index, index+1));
 		}
 		wordPuzzle.addVerticalLineToPuzzle(verticalRow.toString());
 	}

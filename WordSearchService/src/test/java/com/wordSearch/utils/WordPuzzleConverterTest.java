@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,6 +15,7 @@ public class WordPuzzleConverterTest {
 
 	
 	
+	private static final int CORRECT_SIZE = 15;
 	private static List<String> FIRST_LINE;;
 	private static final String SECOND_LINE = "UMKHULKINVJOCWE";
 	private WordPuzzleConverter puzzleConverter;
@@ -47,11 +49,14 @@ public class WordPuzzleConverterTest {
 		WordPuzzle puzzle = puzzleConverter.convertPuzzleFrom("target/Resources/wordsearch.txt");
 		assertEquals(SECOND_LINE,puzzle.getHorizontalRows().get(0));
 		assertEquals(FOURTEEN_LINE,puzzle.getHorizontalRows().get(14));
+		assertEquals(CORRECT_SIZE,puzzle.getHorizontalRows().size());
 	}	
 	@Test
 	public void whenAllLinesOfTextAreReadEnsureTheCorrectVerticalRowHasBeenAdded() {
 		WordPuzzle puzzle = puzzleConverter.convertPuzzleFrom("target/Resources/wordsearch.txt");
 		assertEquals(VERTICAL_LINE,puzzle.getVerticalRows().get(0));
+		assertEquals(SECOND_V_LINE,puzzle.getVerticalRows().get(1));
+		assertEquals(CORRECT_SIZE,puzzle.getVerticalRows().size());
 	}	
 	
 	

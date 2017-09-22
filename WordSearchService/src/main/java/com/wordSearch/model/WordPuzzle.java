@@ -7,12 +7,13 @@ public class WordPuzzle {
 
 	private List<String> horizontalRows = new ArrayList<String>();
 	private List<String> wordsToFind = new ArrayList<String>();
+	private List<String> verticalRows = new ArrayList<String>();
 
 	public List<String> getHorizontalRows() {
 		return horizontalRows;
 	}
 
-	public void addLineToPuzzle(String x) {
+	public void addHorizontalLineToPuzzle(String x) {
 		horizontalRows.add(x);
 	}
 
@@ -22,6 +23,14 @@ public class WordPuzzle {
 
 	public void setWordsToFind(List<String> wordsToFind) {
 		this.wordsToFind = wordsToFind;
+	}
+
+	public List<String> getVerticalRows() {
+		return verticalRows;
+	}
+	
+	public void addVerticalLineToPuzzle(String x) {
+		verticalRows.add(x);
 	}
 
 

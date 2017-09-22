@@ -20,14 +20,25 @@ public class WordPuzzleConverter {
 		} catch (IOException e) {
 			e.printStackTrace();
 		};
+		addVerticalLinesToWordPuzzle();
 		return wordPuzzle;
+	}
+
+	private void addVerticalLinesToWordPuzzle() {
+		List<String> horizontalRows = wordPuzzle.getHorizontalRows();
+		StringBuilder verticalRow = new StringBuilder();
+		for (String row : horizontalRows) {
+			verticalRow.append(row.substring(0, 1));
+		}
+		wordPuzzle.addVerticalLineToPuzzle(verticalRow.toString());
 	}
 
 	private void addLinesToPuzzle(String row) {
 		if(wordPuzzle.getWordsToFind().isEmpty()) { 
 			wordPuzzle.setWordsToFind(convertToList(row));
+			return;
 		}
-		wordPuzzle.addLineToPuzzle(row);
+		wordPuzzle.addHorizontalLineToPuzzle(row.replace(",", ""));
 	}
 
 	private List<String> convertToList(String row) {

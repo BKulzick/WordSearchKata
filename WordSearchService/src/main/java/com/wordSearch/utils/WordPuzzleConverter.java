@@ -3,6 +3,7 @@ package com.wordSearch.utils;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,40 +11,50 @@ import com.wordSearch.model.WordPuzzle;
 
 public class WordPuzzleConverter {
 
+	private static final int START_AT_ROW_ONE = 1;
+	private static final int START_AT_BEGINNING = 0;
 	private static final String COMMA = ",";
-	private WordPuzzle wordPuzzle = new  WordPuzzle();
+	private WordPuzzle wordPuzzle; 
 
 	public WordPuzzle convertPuzzleFrom(String filepath) {
-		
-		try {
-			Files.readAllLines(Paths.get(filepath)).forEach(x -> addLinesToPuzzle(x));
-		} catch (IOException e) {
-			e.printStackTrace();
-		};
-		addVerticalLinesToWordPuzzle();
-		addDiagonalYLinesToWordPuzzle();
+		wordPuzzle = new WordPuzzle();
+		addHorizontalLinesToWordPuzzleFromFile(readLinesFromThisFile(filepath));
+		addVerticalLinesToWordPuzzle(wordPuzzle.getHorizontalRows());
+		addDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows(), START_AT_BEGINNING);
+		addDiagonalLinesToWordPuzzle(wordPuzzle.getVerticalRows(),START_AT_ROW_ONE);
 		return wordPuzzle;
 	}
 
-	private void addDiagonalYLinesToWordPuzzle() {
-		List<String> horizontalRows = wordPuzzle.getHorizontalRows();
-		for (int row = 0; row < horizontalRows.size(); row++) {
-			createAdditionalDiagonalRow(row);
+	private void addHorizontalLinesToWordPuzzleFromFile(List<String> rows) {
+		rows.forEach(x -> addLinesToPuzzle(x));
+	}
+	private List<String> readLinesFromThisFile(String filepath) {
+		List<String> fileStream = new ArrayList<>(); 
+		try {
+			fileStream = Files.readAllLines(Paths.get(filepath));
+		} catch (IOException e) {
+			e.printStackTrace();
+		};
+		return fileStream;
+	}
+
+	private void addDiagonalLinesToWordPuzzle(List<String> rows, Integer startingRow) {
+		for (int row = startingRow; row < rows.size(); row++) {
+			addAdditionalDiagonalRow(row, rows);
 			}
 	}
 
-	private void createAdditionalDiagonalRow(Integer startingRow) {
+	private void addAdditionalDiagonalRow(Integer startingRow,List<String> rows) {
 		StringBuilder diagRow = new StringBuilder();
-		for (int i = 0; i < wordPuzzle.getHorizontalRows().size(); i++) {
-			diagRow.append(wordPuzzle.getHorizontalRows().get(startingRow).substring(i, i+1));
+		for (int i = 0; i < rows.size(); i++) {
+			diagRow.append(rows.get(startingRow).substring(i, i+1));
 			startingRow++;
-			if(startingRow>=wordPuzzle.getHorizontalRows().size()) { break; }
+			if(startingRow>=rows.size()) { break; }
 		}
 		wordPuzzle.addDiagonalYLineToPuzzle(diagRow.toString());
 	}
 
-	private void addVerticalLinesToWordPuzzle() {
-		List<String> horizontalRows = wordPuzzle.getHorizontalRows();
+	private void addVerticalLinesToWordPuzzle(List<String> horizontalRows) {
 		for (int i = 0; i < horizontalRows.size(); i++) {
 			createAdditionalVerticalRow(horizontalRows, i);			
 		}

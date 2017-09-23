@@ -1,5 +1,8 @@
 package com.wordSearch.utils;
 
+import static com.wordSearch.utils.WordSearchFileReader.classreadLinesFromThisFile;
+
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,7 +21,7 @@ public class WordPuzzleConverter {
 
 	public WordPuzzle convertPuzzleFrom(String filepath) {
 		wordPuzzle = new WordPuzzle();
-		addHorizontalLinesToWordPuzzleFromFile(readLinesFromThisFile(filepath));
+		addHorizontalLinesToWordPuzzleFromFile(classreadLinesFromThisFile(filepath));
 		addVerticalLinesToWordPuzzle(wordPuzzle.getHorizontalRows());
 		addDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows(), START_AT_BEGINNING);
 		addDiagonalLinesToWordPuzzle(wordPuzzle.getVerticalRows(),START_AT_ROW_ONE);
@@ -28,15 +31,7 @@ public class WordPuzzleConverter {
 	private void addHorizontalLinesToWordPuzzleFromFile(List<String> rows) {
 		rows.forEach(x -> addLinesToPuzzle(x));
 	}
-	private List<String> readLinesFromThisFile(String filepath) {
-		List<String> fileStream = new ArrayList<>(); 
-		try {
-			fileStream = Files.readAllLines(Paths.get(filepath));
-		} catch (IOException e) {
-			e.printStackTrace();
-		};
-		return fileStream;
-	}
+
 
 	private void addDiagonalLinesToWordPuzzle(List<String> rows, Integer startingRow) {
 		for (int row = startingRow; row < rows.size(); row++) {

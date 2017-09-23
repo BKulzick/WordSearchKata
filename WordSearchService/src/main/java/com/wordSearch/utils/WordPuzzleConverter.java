@@ -21,7 +21,25 @@ public class WordPuzzleConverter {
 			e.printStackTrace();
 		};
 		addVerticalLinesToWordPuzzle();
+		addDiagonalYLinesToWordPuzzle();
 		return wordPuzzle;
+	}
+
+	private void addDiagonalYLinesToWordPuzzle() {
+		List<String> horizontalRows = wordPuzzle.getHorizontalRows();
+		for (int row = 0; row < horizontalRows.size(); row++) {
+			createAdditionalDiagonalRow(row);
+			}
+	}
+
+	private void createAdditionalDiagonalRow(Integer startingRow) {
+		StringBuilder diagRow = new StringBuilder();
+		for (int i = 0; i < wordPuzzle.getHorizontalRows().size(); i++) {
+			diagRow.append(wordPuzzle.getHorizontalRows().get(startingRow).substring(i, i+1));
+			startingRow++;
+			if(startingRow>=wordPuzzle.getHorizontalRows().size()) { break; }
+		}
+		wordPuzzle.addDiagonalYLineToPuzzle(diagRow.toString());
 	}
 
 	private void addVerticalLinesToWordPuzzle() {

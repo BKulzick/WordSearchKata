@@ -22,6 +22,8 @@ public class WordPuzzleConverterTest {
 	private static final String VERTICAL_LINE = "ULHBASBONESTOWK";
 	private static final String SECOND_V_LINE = "MLSRYCLKUYJGJZY";
 	private static final String FOURTEEN_LINE = "KYLBQQPMDFCKEAB";
+	private static final String DIAG_LINE_YAXIS1 = "ULUSGYEMECEOZXB";
+	private static final String DIAG_LINE_YAXIS2 = "LSJATNMMPBTBUA";
 	
 
 	@Before
@@ -58,6 +60,13 @@ public class WordPuzzleConverterTest {
 		assertEquals(SECOND_V_LINE,puzzle.getVerticalRows().get(1));
 		assertEquals(CORRECT_SIZE,puzzle.getVerticalRows().size());
 	}	
+	
+	@Test
+	public void whenAllLinesOfTextAreReadEnsureTheCorrectDiagonalRowHasBeenAdded() {
+		WordPuzzle puzzle = puzzleConverter.convertPuzzleFrom("target/Resources/wordsearch.txt");
+		assertEquals(DIAG_LINE_YAXIS1,puzzle.getDiagonalYRows().get(0));
+		assertEquals(DIAG_LINE_YAXIS2,puzzle.getDiagonalYRows().get(1));
+	}
 	
 	
 	

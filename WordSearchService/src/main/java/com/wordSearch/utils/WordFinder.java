@@ -1,6 +1,10 @@
 package com.wordSearch.utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.wordSearch.model.WordFinderAnswer;
+import com.wordSearch.model.WordPuzzle;
 
 public class WordFinder {
 
@@ -18,13 +22,15 @@ public class WordFinder {
 
 	private WordFinderAnswer reverseLocationForBackwardsAnswer(WordFinderAnswer answer,String puzzleLine) {
 		Integer correctLocation = puzzleLine.length() - answer.getXLocation();
-		answer.setXLocation(correctLocation);
+		answer.setInitialLocation(correctLocation);
+		answer.setBackwards(true);
 		return answer;
 	}
 
 	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine) {
 		WordFinderAnswer answer =new WordFinderAnswer(true);
-		answer.setXLocation(findLocationOfWordInPuzzle(word,puzzleLine));
+		answer.setInitialLocation(findLocationOfWordInPuzzle(word,puzzleLine));
+		answer.setBackwards(false);
 		return answer;
 	}
 
@@ -34,6 +40,32 @@ public class WordFinder {
 
 	private Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 		return puzzleLine.indexOf(word);
+	}
+
+	public List<WordFinderAnswer> searchThisPuzzle(WordPuzzle puzzle) {
+		List<String> wordsToFind = puzzle.getWordsToFind();
+		WordFinderAnswer answer = searchForThisWord(wordsToFind.get(0), puzzle);
+		List<WordFinderAnswer> answers = new ArrayList<>();
+		answers.add(answer);
+		return answers;
+	}
+
+	private WordFinderAnswer searchForThisWord(String word, WordPuzzle puzzle) {
+		List<String> verticalRows = puzzle.getVerticalRows();
+		WordFinderAnswer answer = new WordFinderAnswer(false);
+		answer = searchVerticalRows(word, verticalRows, answer);
+		return answer;
+	}
+
+	private WordFinderAnswer searchVerticalRows(String word, List<String> verticalRows, WordFinderAnswer answer) {
+		for (int row = 0; row<=verticalRows.size(); row++) {
+			answer = searchFor(word,verticalRows.get(row));
+			if (answer.getIsWordFound()) { 
+				answer.setYLocation(answer.getInitialLocation());
+				answer.setXLocation(row);
+				return answer; }
+		}
+		return answer;
 	}
 
 }

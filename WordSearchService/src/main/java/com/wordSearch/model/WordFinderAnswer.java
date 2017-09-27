@@ -1,5 +1,9 @@
 package com.wordSearch.model;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+
 public class WordFinderAnswer {
 
 	private boolean isWordFound;
@@ -7,6 +11,7 @@ public class WordFinderAnswer {
 	private Integer yLocation;
 	private Integer initialLocation;
 	private boolean isBackwards;
+	private ArrayList<Point> wordLocation;
 	
 	public WordFinderAnswer(boolean thisWordFound) {
 		this.isWordFound=thisWordFound;
@@ -55,6 +60,16 @@ public class WordFinderAnswer {
 
 	public Integer getYLocation() {
 		return yLocation;
+	}
+
+
+	public ArrayList<Point> getWordLocation() {
+		return wordLocation;
+	}
+
+
+	public void setWordLocation(ArrayList<Point> wordLocation) {
+		this.wordLocation = wordLocation;
 	}
 
 

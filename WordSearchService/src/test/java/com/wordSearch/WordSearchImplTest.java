@@ -24,12 +24,15 @@ public class WordSearchImplTest {
 		puzzle = new WordPuzzle();
 	}
 	@Test
-	public void whenAPuzzleToReadReturnAnArrayOfTheFirstWordLocation() {
+	public void whenAPuzzleToReadReturnAnArrayOfTheFirstWordLocationVerticalFowards() {
 		WordSearchImpl impl = new WordSearchImpl();
 		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
 		Assert.assertTrue(answer.get(0).getIsWordFound());
-		Assert.assertEquals((Integer)0, answer.get(0).getXLocation());
-		Assert.assertEquals((Integer)6, answer.get(0).getYLocation());
-		
+		Assert.assertEquals(0D, answer.get(0).getWordLocation().get(0).getX(), .01);
+		Assert.assertEquals(6.0D, answer.get(0).getWordLocation().get(0).getY(), .01);
+		Assert.assertEquals(0.0D, answer.get(0).getWordLocation().get(1).getX(), .01);
+		Assert.assertEquals(7.0D, answer.get(0).getWordLocation().get(1).getY(), .01);
+		Assert.assertEquals(0.0D, answer.get(0).getWordLocation().get(4).getX(), .01);
+		Assert.assertEquals(10.0D, answer.get(0).getWordLocation().get(4).getY(), .01);
 	}
 }

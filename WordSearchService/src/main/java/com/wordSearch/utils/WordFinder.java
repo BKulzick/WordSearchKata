@@ -1,5 +1,6 @@
 package com.wordSearch.utils;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +62,32 @@ public class WordFinder {
 		for (int row = 0; row<=verticalRows.size(); row++) {
 			answer = searchFor(word,verticalRows.get(row));
 			if (answer.getIsWordFound()) { 
-				answer.setYLocation(answer.getInitialLocation());
-				answer.setXLocation(row);
+				if(!answer.isBackwards()) {
+					answer.setWordLocation(buildYForwardLocations(word,row,answer.getInitialLocation()));
+				}
+				if(answer.isBackwards()) {
+					answer.setWordLocation(buildYBackwardsLocations(word,row,answer.getInitialLocation()));
+				}
+				
 				return answer; }
 		}
 		return answer;
+	}
+
+	private ArrayList<Point> buildYBackwardsLocations(String word, int row, Integer initialLocation) {
+		ArrayList<Point> wordLocation = new ArrayList<>();
+		for(int i =0; i<word.length(); i++) {
+			wordLocation.add(new Point(row, initialLocation-i));
+		}
+		return wordLocation;
+	}
+
+	private ArrayList<Point> buildYForwardLocations(String word, int row, Integer initialLocation) {
+		ArrayList<Point> wordLocation = new ArrayList<>();
+		for(int i =0; i<word.length(); i++) {
+			wordLocation.add(new Point(row, initialLocation+i));
+		}
+		return wordLocation;
 	}
 
 }

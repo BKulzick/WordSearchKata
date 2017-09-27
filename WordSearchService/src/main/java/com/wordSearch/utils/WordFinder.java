@@ -22,7 +22,7 @@ public class WordFinder {
 	}
 
 	private WordFinderAnswer reverseLocationForBackwardsAnswer(WordFinderAnswer answer,String puzzleLine) {
-		Integer correctLocation = puzzleLine.length() - answer.getXLocation();
+		Integer correctLocation = puzzleLine.length() - answer.getInitialLocation();
 		answer.setInitialLocation(correctLocation);
 		answer.setBackwards(true);
 		return answer;
@@ -45,9 +45,10 @@ public class WordFinder {
 
 	public List<WordFinderAnswer> searchThisPuzzle(WordPuzzle puzzle) {
 		List<String> wordsToFind = puzzle.getWordsToFind();
-		WordFinderAnswer answer = searchForThisWord(wordsToFind.get(0), puzzle);
 		List<WordFinderAnswer> answers = new ArrayList<>();
-		answers.add(answer);
+		for (String word : wordsToFind) {
+			answers.add(searchForThisWord(word, puzzle));
+		}
 		return answers;
 	}
 
@@ -59,7 +60,7 @@ public class WordFinder {
 	}
 
 	private WordFinderAnswer searchVerticalRows(String word, List<String> verticalRows, WordFinderAnswer answer) {
-		for (int row = 0; row<=verticalRows.size(); row++) {
+		for (int row = 0; row<=verticalRows.size()-1; row++) {
 			answer = searchFor(word,verticalRows.get(row));
 			if (answer.getIsWordFound()) { 
 				if(!answer.isBackwards()) {

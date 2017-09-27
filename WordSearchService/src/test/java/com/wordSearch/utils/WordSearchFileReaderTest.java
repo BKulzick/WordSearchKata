@@ -13,7 +13,7 @@ public class WordSearchFileReaderTest {
 
 	@Test
 	public void whenFileReaderGivenTxtFileEnsureListReturned() {
-		List<String> wordSearch = classreadLinesFromThisFile("target/Resources/wordsearch.txt");
+		List<String> wordSearch = classreadLinesFromThisFile("resources/wordsearch.txt");
 		assertEquals(SECOND_LINE,wordSearch.get(1));
 	}
 

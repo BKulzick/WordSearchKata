@@ -9,6 +9,7 @@ public class WordPuzzle {
 	private List<String> wordsToFind = new ArrayList<String>();
 	private List<String> verticalRows = new ArrayList<String>();
 	private List<String> diagonalYRows = new ArrayList<String>();
+	private List<String> ascendingDiagonalRows = new ArrayList<String>();
 
 	public List<String> getHorizontalRows() {
 		return horizontalRows;
@@ -34,14 +35,20 @@ public class WordPuzzle {
 		verticalRows.add(x);
 	}
 
-	public List<String> getDiagonalYRows() {
+	public List<String> getDescendingDiagonalRows() {
 		return diagonalYRows ;
 	}
 
 	public void addDiagonalYLineToPuzzle(String row) {
 		diagonalYRows.add(row);
-		
 	}
 
+	public List<String> getAscendingDiagonalRows() {
+		return ascendingDiagonalRows;
+	}
+	
+	public void addDiagonalAscendingDiagToPuzzle(String row) {
+		ascendingDiagonalRows.add(row);
+	}
 
 }

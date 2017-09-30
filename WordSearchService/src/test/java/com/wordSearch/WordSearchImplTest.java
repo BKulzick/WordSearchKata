@@ -52,7 +52,7 @@ public class WordSearchImplTest {
 		assertEquals(6, answer.get(1).getWordLocation().get(3).getY(), .01);
 	}
 	@Test
-	public void whenAPuzzleIsReadReturnAnArrayOfTheFirstThirdLocationHorizontalBackwords() {
+	public void whenAPuzzleIsReadReturnAnArrayOfTheThirdLocationHorizontalBackwords() {
 		WordSearchImpl impl = new WordSearchImpl();
 		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
 		assertTrue(answer.get(2).getIsWordFound());
@@ -62,6 +62,31 @@ public class WordSearchImplTest {
 		assertEquals(7, answer.get(2).getWordLocation().get(1).getY(), .01);
 		assertEquals(1, answer.get(2).getWordLocation().get(3).getX(), .01);
 		assertEquals(7, answer.get(2).getWordLocation().get(3).getY(), .01);
+	}
+	@Test
+	public void whenAPuzzleIsReadReturnAnArrayOfTheFourthLocationHorizontalForwards() {
+		WordSearchImpl impl = new WordSearchImpl();
+		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
+		assertTrue(answer.get(3).getIsWordFound());
+		assertEquals(0, answer.get(3).getWordLocation().get(0).getX(), .01);
+		assertEquals(5, answer.get(3).getWordLocation().get(0).getY(), .01);
+		assertEquals(1, answer.get(3).getWordLocation().get(1).getX(), .01);
+		assertEquals(5, answer.get(3).getWordLocation().get(1).getY(), .01);
+		assertEquals(5, answer.get(3).getWordLocation().get(5).getX(), .01);
+		assertEquals(5, answer.get(3).getWordLocation().get(5).getY(), .01);
+	}
+	
+	@Test
+	public void whenAPuzzleIsReadReturnAnArrayOfTheFifthLocationDiagonalDescending() {
+		WordSearchImpl impl = new WordSearchImpl();
+		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
+		assertTrue(answer.get(4).getIsWordFound());
+		assertEquals(3, answer.get(4).getWordLocation().get(0).getX(), .01);
+		assertEquals(1, answer.get(4).getWordLocation().get(0).getY(), .01);
+		assertEquals(4, answer.get(4).getWordLocation().get(1).getX(), .01);
+		assertEquals(2, answer.get(4).getWordLocation().get(1).getY(), .01);
+		assertEquals(7, answer.get(4).getWordLocation().get(4).getX(), .01);
+		assertEquals(5, answer.get(4).getWordLocation().get(4).getY(), .01);
 	}
 	
 }

@@ -4,17 +4,20 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wordSearch.enums.AnswerType;
+
 public class WordFinderAnswer {
 
 	private boolean isWordFound;
 	private Integer xLocation;
 	private Integer yLocation;
 	private Integer initialLocation;
-	private boolean isBackwards;
 	private ArrayList<Point> wordLocation;
+	private AnswerType answerType;
 	
-	public WordFinderAnswer(boolean thisWordFound) {
+	public WordFinderAnswer(boolean thisWordFound, AnswerType answerType) {
 		this.isWordFound=thisWordFound;
+		this.answerType=answerType;
 	}
 
 
@@ -48,16 +51,6 @@ public class WordFinderAnswer {
 	}
 
 
-	public boolean isBackwards() {
-		return isBackwards;
-	}
-
-
-	public void setBackwards(boolean isBackwards) {
-		this.isBackwards = isBackwards;
-	}
-
-
 	public Integer getYLocation() {
 		return yLocation;
 	}
@@ -70,6 +63,16 @@ public class WordFinderAnswer {
 
 	public void setWordLocation(ArrayList<Point> wordLocation) {
 		this.wordLocation = wordLocation;
+	}
+
+
+	public AnswerType getAnswerType() {
+		return answerType;
+	}
+
+
+	public void setAnswerType(AnswerType rowType) {
+		this.answerType = rowType;
 	}
 
 

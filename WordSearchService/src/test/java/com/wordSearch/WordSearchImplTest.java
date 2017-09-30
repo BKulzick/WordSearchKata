@@ -27,7 +27,7 @@ public class WordSearchImplTest {
 		puzzle = new WordPuzzle();
 	}
 	@Test
-	public void whenAPuzzleToReadReturnAnArrayOfTheFirstWordLocationVerticalFowards() {
+	public void whenAPuzzleIsReadReturnAnArrayOfTheFirstWordLocationVerticalFowards() {
 		WordSearchImpl impl = new WordSearchImpl();
 		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
 		assertTrue(answer.get(0).getIsWordFound());
@@ -40,7 +40,7 @@ public class WordSearchImplTest {
 	}
 	
 	@Test
-	public void whenAPuzzleToReadReturnAnArrayOfTheFirstWordLocationVerticalBackwards() {
+	public void whenAPuzzleIsReadReturnAnArrayOfTheSecondWordLocationVerticalBackwards() {
 		WordSearchImpl impl = new WordSearchImpl();
 		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
 		assertTrue(answer.get(1).getIsWordFound());
@@ -51,4 +51,17 @@ public class WordSearchImplTest {
 		assertEquals(5, answer.get(1).getWordLocation().get(3).getX(), .01);
 		assertEquals(6, answer.get(1).getWordLocation().get(3).getY(), .01);
 	}
+	@Test
+	public void whenAPuzzleIsReadReturnAnArrayOfTheFirstThirdLocationHorizontalBackwords() {
+		WordSearchImpl impl = new WordSearchImpl();
+		List<WordFinderAnswer> answer = impl.solveThisPuzzle(RESOURCES_WORDSEARCH_TXT);
+		assertTrue(answer.get(2).getIsWordFound());
+		assertEquals(4, answer.get(2).getWordLocation().get(0).getX(), .01);
+		assertEquals(7, answer.get(2).getWordLocation().get(0).getY(), .01);
+		assertEquals(3, answer.get(2).getWordLocation().get(1).getX(), .01);
+		assertEquals(7, answer.get(2).getWordLocation().get(1).getY(), .01);
+		assertEquals(1, answer.get(2).getWordLocation().get(3).getX(), .01);
+		assertEquals(7, answer.get(2).getWordLocation().get(3).getY(), .01);
+	}
+	
 }

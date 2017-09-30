@@ -4,34 +4,35 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wordSearch.enums.AnswerType;
 import com.wordSearch.model.WordFinderAnswer;
 import com.wordSearch.model.WordPuzzle;
 
 public class WordFinder {
 
-	public WordFinderAnswer searchFor(String word, String puzzleLine) {
+	public WordFinderAnswer searchForForwards(String word, String puzzleLine, AnswerType answerType) {
 		if (puzzleLine.contains(word)) { 
-			return buildAnswerLocation(word, puzzleLine); 
+			return buildAnswerLocation(word, puzzleLine, answerType); 
 			}
+		return new WordFinderAnswer(false, answerType);
+	}
+
+	public WordFinderAnswer searchForBackwards(String word, String puzzleLine, AnswerType answerType) {
 		if (puzzleLine.contains(backwards(word))) {
-			WordFinderAnswer answer = buildAnswerLocation(backwards(word), puzzleLine);
-			return reverseLocationForBackwardsAnswer(answer,puzzleLine);
+			return buildAnswerLocation(backwards(word), puzzleLine, answerType);
 		}
-		
-		return new WordFinderAnswer(false);
+		return new WordFinderAnswer(false, answerType);
 	}
 
 	private WordFinderAnswer reverseLocationForBackwardsAnswer(WordFinderAnswer answer,String puzzleLine) {
 		Integer correctLocation = puzzleLine.length() - answer.getInitialLocation();
 		answer.setInitialLocation(correctLocation);
-		answer.setBackwards(true);
 		return answer;
 	}
 
-	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine) {
-		WordFinderAnswer answer =new WordFinderAnswer(true);
-		answer.setInitialLocation(findLocationOfWordInPuzzle(word,puzzleLine));
-		answer.setBackwards(false);
+	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine, AnswerType answerType) {
+		WordFinderAnswer answer =new WordFinderAnswer(true, answerType);
+		answer.setInitialLocation(answerType.findLocationOfWordInPuzzle(word,puzzleLine));
 		return answer;
 	}
 
@@ -53,42 +54,38 @@ public class WordFinder {
 	}
 
 	private WordFinderAnswer searchForThisWord(String word, WordPuzzle puzzle) {
-		List<String> verticalRows = puzzle.getVerticalRows();
-		WordFinderAnswer answer = new WordFinderAnswer(false);
-		answer = searchVerticalRows(word, verticalRows, answer);
+		WordFinderAnswer answer = new WordFinderAnswer(false, null);
+		answer = searchRows(word, puzzle, answer, AnswerType.VERTICAL_FORWARD);
+		if(answer.getIsWordFound()) { return answer; }
+		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.VERTICAL_BACKWARD);
+		if(answer.getIsWordFound()) { return answer; }
+			answer = searchBackwardsRows(word, puzzle, answer, AnswerType.HORIZONTAL_BACKWARD);
 		return answer;
 	}
 
-	private WordFinderAnswer searchVerticalRows(String word, List<String> verticalRows, WordFinderAnswer answer) {
-		for (int row = 0; row<=verticalRows.size()-1; row++) {
-			answer = searchFor(word,verticalRows.get(row));
+	private WordFinderAnswer searchRows(String word, WordPuzzle puzzle, WordFinderAnswer answer, AnswerType answerType) {
+		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
+			answer = searchForForwards(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
-				if(!answer.isBackwards()) {
-					answer.setWordLocation(buildYForwardLocations(word,row,answer.getInitialLocation()));
+				return createAnswerFromLocation(word, answer, row, answerType); 
 				}
-				if(answer.isBackwards()) {
-					answer.setWordLocation(buildYBackwardsLocations(word,row,answer.getInitialLocation()));
+		}
+		return answer;
+	}
+	
+	private WordFinderAnswer searchBackwardsRows(String word, WordPuzzle puzzle, WordFinderAnswer answer, AnswerType answerType) {
+		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
+			answer = searchForBackwards(word,answerType.getRow(puzzle).get(row), answerType);
+			if (answer.getIsWordFound()) { 
+				return createAnswerFromLocation(word, answer, row, answerType); 
 				}
-				
-				return answer; }
 		}
 		return answer;
 	}
 
-	private ArrayList<Point> buildYBackwardsLocations(String word, int row, Integer initialLocation) {
-		ArrayList<Point> wordLocation = new ArrayList<>();
-		for(int i =0; i<word.length(); i++) {
-			wordLocation.add(new Point(row, initialLocation-i));
-		}
-		return wordLocation;
-	}
-
-	private ArrayList<Point> buildYForwardLocations(String word, int row, Integer initialLocation) {
-		ArrayList<Point> wordLocation = new ArrayList<>();
-		for(int i =0; i<word.length(); i++) {
-			wordLocation.add(new Point(row, initialLocation+i));
-		}
-		return wordLocation;
+	private WordFinderAnswer createAnswerFromLocation(String word, WordFinderAnswer answer, int row, AnswerType m) {
+			answer.setWordLocation(m.buildLocations(word, row, answer.getInitialLocation()));
+		return answer;
 	}
 
 }

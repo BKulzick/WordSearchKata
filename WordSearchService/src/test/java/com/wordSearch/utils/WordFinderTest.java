@@ -21,47 +21,48 @@ public class WordFinderTest {
 	@Test
 	public void whenGivenLettersWithWordEnsureGivenWordFound() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,STRING_HAS_BOY_AT_4);
+		WordFinderAnswer answer = finder.searchForForwards(BOY,STRING_HAS_BOY_AT_4, null);
 		assertTrue(answer.getIsWordFound());
+		assertEquals(FOURTH_SPOT,answer.getInitialLocation());
 	}
 	
 	@Test
 	public void whenGivenLettersWithNoWordEnsureGivenWordNotFound() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,NOT_FOUND);
+		WordFinderAnswer answer = finder.searchForForwards(BOY,NOT_FOUND, null);
 		assertFalse(answer.getIsWordFound());
 	}
 	
 	@Test
 	public void whenWordIsFoundEnsureXCoordinateInLineReturns() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,STRING_HAS_BOY_AT_5);
+		WordFinderAnswer answer = finder.searchForForwards(BOY,STRING_HAS_BOY_AT_5, null);
 		assertTrue(answer.getIsWordFound());
-		Assert.assertEquals(FIFTH_SPOT, answer.getXLocation());
+		Assert.assertEquals(FIFTH_SPOT, answer.getInitialLocation());
 	}
 	
 	@Test
 	public void whenWordIsFoundEnsureXCoordinateInLineReturnsAtSpotFour() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,STRING_HAS_BOY_AT_4);
+		WordFinderAnswer answer = finder.searchForForwards(BOY,STRING_HAS_BOY_AT_4, null);
 		assertTrue(answer.getIsWordFound());
-		Assert.assertEquals(FOURTH_SPOT,answer.getXLocation());
+		Assert.assertEquals(FOURTH_SPOT,answer.getInitialLocation());
 	}	
 	
 	@Test
 	public void whenWordIsFoundEnsureXCoordinateInLineReturnsAtSpotFourWhenDuplicateLettersExist() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,DUPLICATE_BOY_AT_4);
+		WordFinderAnswer answer = finder.searchForForwards(BOY,DUPLICATE_BOY_AT_4, null);
 		assertTrue(answer.getIsWordFound());
-		Assert.assertEquals(FOURTH_SPOT,answer.getXLocation());
+		Assert.assertEquals(FOURTH_SPOT,answer.getInitialLocation());
 	}	
 	
 	@Test
 	public void whenWordExistsBackwordsEnsureXCoordinateInLineReturnsAtSpotFive() {
 		WordFinder finder = new WordFinder();
-		WordFinderAnswer answer = finder.searchFor(BOY,BACKWARDS_BOY_AT_5);
+		WordFinderAnswer answer = finder.searchForBackwards(BOY,BACKWARDS_BOY_AT_5, null);
 		assertTrue(answer.getIsWordFound());
-		Assert.assertEquals(FIFTH_SPOT,answer.getXLocation());
+		Assert.assertEquals(FIFTH_SPOT,answer.getInitialLocation());
 	}
 	
 	

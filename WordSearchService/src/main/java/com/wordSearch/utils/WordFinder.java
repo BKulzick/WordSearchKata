@@ -24,12 +24,6 @@ public class WordFinder {
 		return new WordFinderAnswer(false, answerType);
 	}
 
-	private WordFinderAnswer reverseLocationForBackwardsAnswer(WordFinderAnswer answer,String puzzleLine) {
-		Integer correctLocation = puzzleLine.length() - answer.getInitialLocation();
-		answer.setInitialLocation(correctLocation);
-		return answer;
-	}
-
 	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine, AnswerType answerType) {
 		WordFinderAnswer answer =new WordFinderAnswer(true, answerType);
 		answer.setInitialLocation(answerType.findLocationOfWordInPuzzle(word,puzzleLine));
@@ -60,6 +54,13 @@ public class WordFinder {
 		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.VERTICAL_BACKWARD);
 		if(answer.getIsWordFound()) { return answer; }
 			answer = searchBackwardsRows(word, puzzle, answer, AnswerType.HORIZONTAL_BACKWARD);
+		if(answer.getIsWordFound()) { return answer; }
+		answer = searchRows(word, puzzle, answer, AnswerType.HORIZONTAL_FORWARD);
+		if(answer.getIsWordFound()) { return answer; }
+		answer = searchRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING);
+		if(answer.getIsWordFound()) { return answer; }
+		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING_BACKWARD);
+		
 		return answer;
 	}
 
@@ -67,7 +68,7 @@ public class WordFinder {
 		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
 			answer = searchForForwards(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
-				return createAnswerFromLocation(word, answer, row, answerType); 
+				return createAnswerFromLocation(word, answer, row, answerType, answerType.getRow(puzzle).get(row).length()); 
 				}
 		}
 		return answer;
@@ -77,14 +78,14 @@ public class WordFinder {
 		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
 			answer = searchForBackwards(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
-				return createAnswerFromLocation(word, answer, row, answerType); 
+				return createAnswerFromLocation(word, answer, row, answerType,answerType.getRow(puzzle).get(row).length() ); 
 				}
 		}
 		return answer;
 	}
 
-	private WordFinderAnswer createAnswerFromLocation(String word, WordFinderAnswer answer, int row, AnswerType m) {
-			answer.setWordLocation(m.buildLocations(word, row, answer.getInitialLocation()));
+	private WordFinderAnswer createAnswerFromLocation(String word, WordFinderAnswer answer, int row, AnswerType m, int lengthOfPuzzle) {
+			answer.setWordLocation(m.buildLocations(word, row, answer.getInitialLocation(), lengthOfPuzzle));
 		return answer;
 	}
 

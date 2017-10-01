@@ -34,10 +34,6 @@ public class WordFinder {
 		return new StringBuilder(word).reverse().toString();
 	}
 
-	private Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
-		return puzzleLine.indexOf(word);
-	}
-
 	public List<WordFinderAnswer> searchThisPuzzle(WordPuzzle puzzle) {
 		List<String> wordsToFind = puzzle.getWordsToFind();
 		List<WordFinderAnswer> answers = new ArrayList<>();

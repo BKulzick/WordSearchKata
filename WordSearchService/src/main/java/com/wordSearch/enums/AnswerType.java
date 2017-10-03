@@ -93,16 +93,36 @@ public enum AnswerType {
 	}, DIAGONAL_DESCENDING_BACKWARD{
 		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
 			ArrayList<Point> wordLocation = new ArrayList<>();
-			if(row<lengthOfPuzzle) {initialLocation=initialLocation+row;}
+			int startX = row+initialLocation;
+			int startY = row+initialLocation;
 			if(row>=lengthOfPuzzle) {row=(row-lengthOfPuzzle)+initialLocation;}
 			for (int i = 0; i < word.length(); i++) {
-				wordLocation.add(new Point(initialLocation -i+row, initialLocation-i));
+				wordLocation.add(new Point(startX-i, startY-i));
 			}
 			return wordLocation;
 		}
 
 		public List<String> getRow(WordPuzzle puzzle) {
 			return puzzle.getDescendingDiagonalRows();
+		}
+		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
+			return puzzleLine.indexOf(word)+word.length()-1;
+		}
+	}, DIAGONAL_ASCENDING_BACKWARD{
+		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
+			ArrayList<Point> wordLocation = new ArrayList<>();
+			int lengthOfRow = lengthOfPuzzle-row;
+			int startX = lengthOfRow-lengthOfPuzzle+row+initialLocation;
+			int startY = lengthOfRow-(initialLocation+1);
+			if (row>14) {startX++; startY=startY+lengthOfPuzzle; }
+			for (int i = 0; i < word.length(); i++) {
+				wordLocation.add(new Point(startX -i, startY+i));
+			}
+			return wordLocation;
+		}
+
+		public List<String> getRow(WordPuzzle puzzle) {
+			return puzzle.getAscendingDiagonalRows();
 		}
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word)+word.length()-1;
@@ -118,7 +138,6 @@ public enum AnswerType {
 	}
 
 	public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

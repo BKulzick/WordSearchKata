@@ -56,7 +56,8 @@ public class WordFinder {
 		answer = searchRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING);
 		if(answer.getIsWordFound()) { return answer; }
 		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING_BACKWARD);
-		
+		if(answer.getIsWordFound()) { return answer; }
+		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_ASCENDING_BACKWARD);
 		return answer;
 	}
 
@@ -64,7 +65,7 @@ public class WordFinder {
 		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
 			answer = searchForForwards(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
-				return createAnswerFromLocation(word, answer, row, answerType, answerType.getRow(puzzle).get(row).length()); 
+				return createAnswerFromLocation(word, answer, row, answerType, puzzle.getHorizontalRows().get(0).length()); 
 				}
 		}
 		return answer;
@@ -74,7 +75,7 @@ public class WordFinder {
 		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
 			answer = searchForBackwards(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
-				return createAnswerFromLocation(word, answer, row, answerType,answerType.getRow(puzzle).get(row).length() ); 
+				return createAnswerFromLocation(word, answer, row, answerType,puzzle.getHorizontalRows().get(0).length()); 
 				}
 		}
 		return answer;

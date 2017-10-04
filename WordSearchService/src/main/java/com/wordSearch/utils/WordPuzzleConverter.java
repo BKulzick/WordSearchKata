@@ -1,12 +1,5 @@
 package com.wordSearch.utils;
 
-import static com.wordSearch.utils.WordSearchFileReader.classreadLinesFromThisFile;
-
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,11 +11,12 @@ public class WordPuzzleConverter {
 	private static final int START_AT_BEGINNING = 0;
 	private static final String COMMA = ",";
 	private static final int START_AT_END = 0;
-	private WordPuzzle wordPuzzle; 
+	private WordPuzzle wordPuzzle;
+	private WordSearchFileReader reader = new  WordSearchFileReader(); 
 
 	public WordPuzzle convertPuzzleFrom(String filepath) {
 		wordPuzzle = new WordPuzzle();
-		addHorizontalLinesToWordPuzzleFromFile(classreadLinesFromThisFile(filepath));
+		addHorizontalLinesToWordPuzzleFromFile(getReader().classreadLinesFromThisFile(filepath));
 		addVerticalLinesToWordPuzzle(wordPuzzle.getHorizontalRows());
 		addDescendingDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows(), START_AT_BEGINNING);
 		addDescendingDiagonalLinesToWordPuzzle(wordPuzzle.getVerticalRows(),START_AT_ROW_ONE);
@@ -112,5 +106,15 @@ public class WordPuzzleConverter {
 
 	private List<String> convertToList(String row) {
 		return Arrays.asList(row.split(COMMA));
+	}
+
+
+	public WordSearchFileReader getReader() {
+		return reader;
+	}
+
+
+	public void setReader(WordSearchFileReader reader) {
+		this.reader = reader;
 	}
 }

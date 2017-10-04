@@ -8,7 +8,7 @@ import java.util.List;
 
 public class WordSearchFileReader {
 
-	public static List<String> classreadLinesFromThisFile(String filepath) {
+	public List<String> classreadLinesFromThisFile(String filepath) {
 		List<String> fileStream = new ArrayList<>();
 		try {
 			fileStream = Files.readAllLines(Paths.get(filepath));

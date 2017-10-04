@@ -1,6 +1,5 @@
 package com.wordSearch.utils;
 
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +26,7 @@ public class WordFinder {
 	private WordFinderAnswer buildAnswerLocation(String word, String puzzleLine, AnswerType answerType) {
 		WordFinderAnswer answer =new WordFinderAnswer(true, answerType);
 		answer.setInitialLocation(answerType.findLocationOfWordInPuzzle(word,puzzleLine));
+		answer.setWord(answerType.getWord(word));
 		return answer;
 	}
 
@@ -58,6 +58,7 @@ public class WordFinder {
 		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING_BACKWARD);
 		if(answer.getIsWordFound()) { return answer; }
 		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_ASCENDING_BACKWARD);
+		
 		return answer;
 	}
 

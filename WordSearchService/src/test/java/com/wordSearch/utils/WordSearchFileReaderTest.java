@@ -1,6 +1,5 @@
 package com.wordSearch.utils;
 
-import static com.wordSearch.utils.WordSearchFileReader.classreadLinesFromThisFile;
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -13,7 +12,9 @@ public class WordSearchFileReaderTest {
 
 	@Test
 	public void whenFileReaderGivenTxtFileEnsureListReturned() {
-		List<String> wordSearch = classreadLinesFromThisFile("resources/wordsearch.txt");
+		
+		WordSearchFileReader reader = new WordSearchFileReader();
+		List<String> wordSearch = reader.classreadLinesFromThisFile("resources/wordsearch.txt");
 		assertEquals(SECOND_LINE,wordSearch.get(1));
 	}
 

@@ -1,5 +1,6 @@
 package com.wordSearch.utils;
 
+import static com.wordSearch.utils.MockWordPuzzleCreator.buildMockWordPuzzle;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
@@ -8,6 +9,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
 
 import com.wordSearch.model.WordPuzzle;
 
@@ -35,18 +39,27 @@ public class WordPuzzleConverterTest {
 
 	@Before
 	public void setup() {
-		FIRST_LINE = new ArrayList<String>();
 		puzzleConverter = new WordPuzzleConverter();
-		FIRST_LINE.add("BONES");
-		FIRST_LINE.add("KHAN");
-		FIRST_LINE.add("KIRK");
-		FIRST_LINE.add("SCOTTY");
-		FIRST_LINE.add("SPOCK");
-		FIRST_LINE.add("SULU");
-		FIRST_LINE.add("UHURA");
+		FIRST_LINE = buildFirstLine();
+		WordSearchFileReader mockReader = mock(WordSearchFileReader.class);
+		Mockito.when(mockReader.classreadLinesFromThisFile(Mockito.anyString())).thenReturn(buildMockWordPuzzle());
+		puzzleConverter.setReader(mockReader);
 		puzzle = puzzleConverter.convertPuzzleFrom(RESOURCES_WORDSEARCH_TXT);
+
 	}
-	
+
+	private List<String> buildFirstLine() {
+		List<String> firstLine = new ArrayList<String>();
+		firstLine.add("BONES");
+		firstLine.add("KHAN");
+		firstLine.add("KIRK");
+		firstLine.add("SCOTTY");
+		firstLine.add("SPOCK");
+		firstLine.add("SULU");
+		firstLine.add("UHURA");
+		return firstLine;
+	}
+
 	@Test
 	public void whenALineOfTextIsReadEnsureWordsToFindHasBeenAdded() {
 		assertEquals(FIRST_LINE,puzzle.getWordsToFind());

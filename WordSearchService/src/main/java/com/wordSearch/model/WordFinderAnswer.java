@@ -2,7 +2,6 @@ package com.wordSearch.model;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.wordSearch.enums.AnswerType;
 
@@ -14,6 +13,7 @@ public class WordFinderAnswer {
 	private Integer initialLocation;
 	private ArrayList<Point> wordLocation;
 	private AnswerType answerType;
+	private String word;
 	
 	public WordFinderAnswer(boolean thisWordFound, AnswerType answerType) {
 		this.isWordFound=thisWordFound;
@@ -73,6 +73,28 @@ public class WordFinderAnswer {
 
 	public void setAnswerType(AnswerType rowType) {
 		this.answerType = rowType;
+	}
+
+
+	public String getWord() {
+		return word;
+	}
+
+
+	public void setWord(String word) {
+		this.word = word;
+	}
+	
+	public String toString() {
+		return this.word +": "+ buildReturnPointsString(wordLocation);
+	}
+
+
+	private String buildReturnPointsString(ArrayList<Point> wordLocation2) {
+		StringBuilder points = new StringBuilder();
+		wordLocation2.stream().forEach(x -> points.append("(" +(int)x.getX()+ "," +(int)x.getY() +"),"));
+		points.deleteCharAt(points.lastIndexOf(","));
+		return points.toString();
 	}
 
 

@@ -23,6 +23,9 @@ public enum AnswerType {
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word);
 		}
+		public String getWord(String word) {
+			return word;
+		}
 
 	},
 	VERTICAL_BACKWARD {
@@ -39,6 +42,9 @@ public enum AnswerType {
 		}
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.length()-puzzleLine.indexOf(word);
+		}
+		public String getWord(String word) {
+			return new StringBuilder(word).reverse().toString();
 		}
 	},
 	HORIZONTAL_BACKWARD {
@@ -57,6 +63,9 @@ public enum AnswerType {
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word)+word.length()-1;
 		}
+		public String getWord(String word) {
+			return new StringBuilder(word).reverse().toString();
+		}
 	},
 	HORIZONTAL_FORWARD {
 		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
@@ -72,6 +81,9 @@ public enum AnswerType {
 		}
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word);
+		}
+		public String getWord(String word) {
+			return word;
 		}
 	}, DIAGONAL_DESCENDING{
 		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
@@ -89,6 +101,9 @@ public enum AnswerType {
 		}
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word);
+		}
+		public String getWord(String word) {
+			return word;
 		}
 	}, DIAGONAL_DESCENDING_BACKWARD{
 		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
@@ -108,6 +123,9 @@ public enum AnswerType {
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word)+word.length()-1;
 		}
+		public String getWord(String word) {
+			return new StringBuilder(word).reverse().toString();
+		}
 	}, DIAGONAL_ASCENDING_BACKWARD{
 		public ArrayList<Point> buildLocations(String word, int row, Integer initialLocation,int lengthOfPuzzle) {
 			ArrayList<Point> wordLocation = new ArrayList<>();
@@ -124,8 +142,13 @@ public enum AnswerType {
 		public List<String> getRow(WordPuzzle puzzle) {
 			return puzzle.getAscendingDiagonalRows();
 		}
+		
 		public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
 			return puzzleLine.indexOf(word)+word.length()-1;
+		}
+		
+		public String getWord(String word) {
+			return new StringBuilder(word).reverse().toString();
 		}
 	};
 
@@ -138,6 +161,10 @@ public enum AnswerType {
 	}
 
 	public Integer findLocationOfWordInPuzzle(String word, String puzzleLine) {
+		return null;
+	}
+
+	public String getWord(String word) {
 		return null;
 	}
 	

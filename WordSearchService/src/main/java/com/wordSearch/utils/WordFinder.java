@@ -1,5 +1,13 @@
 package com.wordSearch.utils;
 
+import static com.wordSearch.enums.AnswerType.DIAGONAL_ASCENDING_BACKWARD;
+import static com.wordSearch.enums.AnswerType.DIAGONAL_DESCENDING;
+import static com.wordSearch.enums.AnswerType.DIAGONAL_DESCENDING_BACKWARD;
+import static com.wordSearch.enums.AnswerType.HORIZONTAL_BACKWARD;
+import static com.wordSearch.enums.AnswerType.HORIZONTAL_FORWARD;
+import static com.wordSearch.enums.AnswerType.VERTICAL_BACKWARD;
+import static com.wordSearch.enums.AnswerType.VERTICAL_FORWARD;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,17 +17,10 @@ import com.wordSearch.model.WordPuzzle;
 
 public class WordFinder {
 
-	public WordFinderAnswer searchForForwards(String word, String puzzleLine, AnswerType answerType) {
+	public WordFinderAnswer searchFor(String word, String puzzleLine, AnswerType answerType) {
 		if (puzzleLine.contains(word)) { 
 			return buildAnswerLocation(word, puzzleLine, answerType); 
 			}
-		return new WordFinderAnswer(false, answerType);
-	}
-
-	public WordFinderAnswer searchForBackwards(String word, String puzzleLine, AnswerType answerType) {
-		if (puzzleLine.contains(backwards(word))) {
-			return buildAnswerLocation(backwards(word), puzzleLine, answerType);
-		}
 		return new WordFinderAnswer(false, answerType);
 	}
 
@@ -45,38 +46,28 @@ public class WordFinder {
 
 	private WordFinderAnswer searchForThisWord(String word, WordPuzzle puzzle) {
 		WordFinderAnswer answer = new WordFinderAnswer(false, null);
-		answer = searchRows(word, puzzle, answer, AnswerType.VERTICAL_FORWARD);
+		answer = searchRows(word, puzzle, answer, VERTICAL_FORWARD);
 		if(answer.getIsWordFound()) { return answer; }
-		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.VERTICAL_BACKWARD);
+		answer = searchRows(backwards(word), puzzle, answer, VERTICAL_BACKWARD);
 		if(answer.getIsWordFound()) { return answer; }
-			answer = searchBackwardsRows(word, puzzle, answer, AnswerType.HORIZONTAL_BACKWARD);
+		answer = searchRows(backwards(word), puzzle, answer, HORIZONTAL_BACKWARD);
 		if(answer.getIsWordFound()) { return answer; }
-		answer = searchRows(word, puzzle, answer, AnswerType.HORIZONTAL_FORWARD);
+		answer = searchRows(word, puzzle, answer, HORIZONTAL_FORWARD);
 		if(answer.getIsWordFound()) { return answer; }
-		answer = searchRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING);
+		answer = searchRows(word, puzzle, answer, DIAGONAL_DESCENDING);
 		if(answer.getIsWordFound()) { return answer; }
-		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_DESCENDING_BACKWARD);
+		answer = searchRows(backwards(word), puzzle, answer, DIAGONAL_DESCENDING_BACKWARD);
 		if(answer.getIsWordFound()) { return answer; }
-		answer = searchBackwardsRows(word, puzzle, answer, AnswerType.DIAGONAL_ASCENDING_BACKWARD);
+		answer = searchRows(backwards(word), puzzle, answer, DIAGONAL_ASCENDING_BACKWARD);
 		
 		return answer;
 	}
 
 	private WordFinderAnswer searchRows(String word, WordPuzzle puzzle, WordFinderAnswer answer, AnswerType answerType) {
 		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
-			answer = searchForForwards(word,answerType.getRow(puzzle).get(row), answerType);
+			answer = searchFor(word,answerType.getRow(puzzle).get(row), answerType);
 			if (answer.getIsWordFound()) { 
 				return createAnswerFromLocation(word, answer, row, answerType, puzzle.getHorizontalRows().get(0).length()); 
-				}
-		}
-		return answer;
-	}
-	
-	private WordFinderAnswer searchBackwardsRows(String word, WordPuzzle puzzle, WordFinderAnswer answer, AnswerType answerType) {
-		for (int row = 0; row<answerType.getRow(puzzle).size(); row++) {
-			answer = searchForBackwards(word,answerType.getRow(puzzle).get(row), answerType);
-			if (answer.getIsWordFound()) { 
-				return createAnswerFromLocation(word, answer, row, answerType,puzzle.getHorizontalRows().get(0).length()); 
 				}
 		}
 		return answer;

@@ -98,4 +98,10 @@ public class WordFinderAnswer {
 	}
 
 
+	public void setIsFound(boolean isFound) {
+		this.isWordFound=isFound;
+		
+	}
+
+
 }

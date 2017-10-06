@@ -7,7 +7,7 @@ I've also created an REST microservice, WordSearchAPI, that utilizes the WordSea
 
 The Good - Tried to show the ability to limit the amount of repeated code using ENUMS.  Tried to use simple tools like contains, Point, etc, and not have to reinvent the wheel. I tried to think object orientated, making the Puzzle and object, and the Solution an object. Made use of Mocks so the File Reader isn't always used.  Over %97 Test Coverage, only missing getters and setters and the error handling for file reader.  Didn't feel the need to extensively test file reader since it is a java provided class.
 
-Things I'd Impove Given Time - Already mentioned making a request validator for the micro service. I also don't like some of the complexity in the Enums, the code is not easily readable.  It was a sum of making the other parts of the code easier. 
+Things I'd Impove Given Time - Already mentioned making a request validator for the micro service. I'd verify all the lines are the same size and that the puzzle is a square. I also would like to reduce some of the complexity in the Enums, the code is not easily readable.  It comes frommaking the other parts of the code easier, and have less repeat code.  
 
 Please contact me if you have any questions.
 

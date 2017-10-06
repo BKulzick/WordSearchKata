@@ -1,0 +1,14 @@
+com/wordsearch/api/api/ApiException.class
+com/wordsearch/api/api/NotFoundException.class
+com/wordsearch/api/api/ApiResponseMessage.class
+com/wordsearch/api/model/WordFinderAnswerLocation.class
+com/wordsearch/api/model/WordFinderAnswer.class
+io/swagger/Swagger2SpringBoot.class
+io/swagger/Swagger2SpringBoot$ExitException.class
+io/swagger/configuration/HomeController.class
+com/wordsearch/api/api/ApiOriginFilter.class
+com/wordsearch/api/api/SearchApi.class
+com/wordsearch/api/model/WordSearchResponse.class
+com/wordsearch/api/model/WordSearchRequest.class
+io/swagger/configuration/SwaggerDocumentationConfig.class
+com/wordsearch/api/api/SearchApiController.class

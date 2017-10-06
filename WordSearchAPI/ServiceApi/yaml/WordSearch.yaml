@@ -1,0 +1,76 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Word Search Micro Service
+  description: APIs to manage PSAP data.
+host: 'localhost:80'
+basePath: /wordSearchService
+schemes:
+  - https
+securityDefinitions:
+  basicAuth:
+    type: basic
+    description: HTTP Basic Authentication. Over `HTTPS`
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /search:
+    post:
+      tags:
+        - wordSearch
+      summary: This Service searches a puzzle for list of words
+      description: ''
+      operationId: searchForAllWords
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: Words and Puzzle
+          required: true
+          schema:
+            $ref: '#/definitions/wordSearchRequest'
+      responses:
+        '200':
+          description: Words and Puzzle Response
+          schema:
+            $ref: '#/definitions/wordSearchResponse'
+        '405':
+          description: Bad Request exception
+definitions:
+  wordSearchRequest:
+    type: object
+    properties:
+      words:
+        type: array
+        items:
+          type: string
+      puzzle:
+        type: array
+        items:
+          type: string
+  wordSearchResponse:
+    type: object
+    properties:
+      answer:
+        type: array
+        items:
+          $ref: '#/definitions/wordFinderAnswer'
+  wordFinderAnswer:
+    type: object
+    properties:
+      word:
+        type: string
+      location:
+        type: array
+        items:
+          type: object
+          properties:
+            x:
+              type: integer
+            y:
+              type: integer

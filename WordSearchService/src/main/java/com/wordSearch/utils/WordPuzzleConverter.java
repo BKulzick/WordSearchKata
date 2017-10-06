@@ -1,9 +1,13 @@
 package com.wordSearch.utils;
 
+import java.awt.Point;
 import java.util.Arrays;
 import java.util.List;
 
+import com.wordSearch.model.WordFinderAnswer;
 import com.wordSearch.model.WordPuzzle;
+import com.wordsearch.api.model.WordFinderAnswerLocation;
+import com.wordsearch.api.model.WordSearchResponse;
 
 public class WordPuzzleConverter {
 
@@ -11,18 +15,22 @@ public class WordPuzzleConverter {
 	private static final int START_AT_BEGINNING = 0;
 	private static final String COMMA = ",";
 	private static final int START_AT_END = 0;
-	private WordPuzzle wordPuzzle;
+	private WordPuzzle wordPuzzle = new WordPuzzle();
 	private WordSearchFileReader reader = new  WordSearchFileReader(); 
 
 	public WordPuzzle convertPuzzleFrom(String filepath) {
-		wordPuzzle = new WordPuzzle();
-		addHorizontalLinesToWordPuzzleFromFile(getReader().classreadLinesFromThisFile(filepath));
+		createPuzzleFromList(getReader().classreadLinesFromThisFile(filepath));
+		return wordPuzzle;
+	}
+
+
+	private void createPuzzleFromList(List<String> list) {
+		addHorizontalLinesToWordPuzzleFromFile(list);
 		addVerticalLinesToWordPuzzle(wordPuzzle.getHorizontalRows());
 		addDescendingDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows(), START_AT_BEGINNING);
 		addDescendingDiagonalLinesToWordPuzzle(wordPuzzle.getVerticalRows(),START_AT_ROW_ONE);
 		addAscendingDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows(),START_AT_END);
 		addSecondAscendingDiagonalLinesToWordPuzzle(wordPuzzle.getHorizontalRows());
-		return wordPuzzle;
 	}
 
 
@@ -116,5 +124,35 @@ public class WordPuzzleConverter {
 
 	public void setReader(WordSearchFileReader reader) {
 		this.reader = reader;
+	}
+
+
+	public  WordPuzzle convertToPuzzle(List<String> words, List<String> puzzle) {
+		wordPuzzle.setWordsToFind(words);
+		createPuzzleFromList(puzzle);
+		return wordPuzzle;
+	}
+
+
+	public WordSearchResponse convertToResponse(List<WordFinderAnswer> answer) {
+		WordSearchResponse response = new WordSearchResponse();
+		answer.forEach(x -> response.addAnswerItem(convertToAnswerItem(x)));
+		return response;
+	}
+
+
+	private com.wordsearch.api.model.WordFinderAnswer convertToAnswerItem(WordFinderAnswer x) {
+		com.wordsearch.api.model.WordFinderAnswer newAnswer = new com.wordsearch.api.model.WordFinderAnswer();
+		x.getWordLocation().stream().forEach(point -> newAnswer.addLocationItem(convertPointToLocation(point)));
+		newAnswer.setWord(x.getWord());
+		return newAnswer;
+	}
+
+
+	private WordFinderAnswerLocation convertPointToLocation(Point y) {
+		WordFinderAnswerLocation location = new WordFinderAnswerLocation();
+		location.setX((int) y.getX());
+		location.setY((int) y.getY());
+		return location;
 	}
 }

@@ -45,7 +45,7 @@ public class WordFinder {
 	}
 
 	private WordFinderAnswer searchForThisWord(String word, WordPuzzle puzzle) {
-		WordFinderAnswer answer = new WordFinderAnswer(false, null);
+		WordFinderAnswer answer = new WordFinderAnswer(false);
 		answer = searchRows(word, puzzle, answer, VERTICAL_FORWARD);
 		if(answer.getIsWordFound()) { return answer; }
 		answer = searchRows(backwards(word), puzzle, answer, VERTICAL_BACKWARD);
